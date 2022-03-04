@@ -130,7 +130,7 @@ mod mongo_if {
         let options = UpdateOptions::builder()
             .upsert(true)
             .build();
-        let upsert_result = binding_collection.update_one(query, d, None).await;
+        let upsert_result = binding_collection.update_one(query, d, options).await;
         match upsert_result {
             Ok(_) => Ok(()),
             Err(_) => Err(MongoDBResult::ERROR("Insert error".to_string())),
