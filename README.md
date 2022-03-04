@@ -1,6 +1,7 @@
 # rust-error-E0698
 This repo contains a minimal example to reproduce and investigate an unexpected rust compiler error E0698 when attempting to implement an async upsert wrapper function for a generic type.
 
+## Problem Replication
 To replicate the issue, run `cargo build`.
 
 This will yield the follwing error:
@@ -34,3 +35,6 @@ note: the type is part of the `async fn` body because of this `await`
 For more information about this error, try `rustc --explain E0698`.
 error: could not compile `rust-error-E0698` due to 2 previous errors
 ```
+
+## Resolution
+This confusion came about by following a google search result to the 0.9.2 mongodb rust driver documentation, where the Collection struct was declared as `pub struct Collection`.  The current 2.1.0 mongo rust driver has the same struct declared as `pub struct Collection<T>`.  While there are some other minor problems with the current version of this repo, the E0698 error no longer exists.
