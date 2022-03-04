@@ -104,7 +104,7 @@ mod mongo_if {
     use mongodb::bson::{to_bson, Document};
     use mongodb::error::Error as MongoDBError;
     use mongodb::options::UpdateOptions;
-    use mongodb::Client;
+    use mongodb::{Client, Collection};
     use serde::Serialize;
     use std::env;
 
@@ -126,7 +126,7 @@ mod mongo_if {
     {
         let d: Document = to_bson(&item).unwrap().as_document().unwrap().clone();
         let query: Document = to_bson(&item.get_key()).unwrap().as_document().unwrap().clone();
-        let binding_collection = client.database(&T::DATABASE).collection(&T::COLLECTION);
+        let binding_collection: Collection<T> = client.database(&T::DATABASE).collection(&T::COLLECTION);
         let options = UpdateOptions::builder()
             .upsert(true)
             .build();
